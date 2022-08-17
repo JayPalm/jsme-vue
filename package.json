@@ -1,0 +1,26 @@
+{
+  "name": "jsme-vue",
+  "main": "/dist/jsme-vue.ssr.js",
+  "module": "/dist/jsme-vue.esm.js",
+  "unpkg": "/dist/jsme-vue.min.js",
+  "style": "/dist/jsme-vue.css",
+  "private": false,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@vueuse/core": "^9.1.0",
+    "jsme-editor": "^2022.2.26",
+    "vue": "^3.2.37"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^3.0.3",
+    "typescript": "^4.6.4",
+    "vite": "^3.0.7",
+    "vue-tsc": "^0.39.5"
+  }
+}
