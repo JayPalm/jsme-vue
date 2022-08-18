@@ -7,7 +7,7 @@ declare global {
 //  window.jsmeOnLoad= window.jsmeOnLoad|| {};
 declare global {
   interface JSME {
-    new (id: String, width: String, height: String): JSME;
+    new (id: String, width: String, height: String, options: String): JSME;
 
     readGenericMolecularInput(smilesString: String): null;
     smiles(): String;
@@ -18,7 +18,12 @@ declare global {
   interface Window {
     jsmeOnLoad: Function;
     JSApplet: {
-      JSME(): (id: String, width: String, height: String) => JSME;
+      JSME(): (
+        id: String,
+        width: String,
+        height: String,
+        options: String
+      ) => JSME;
     };
   }
 }
