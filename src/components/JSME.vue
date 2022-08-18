@@ -2,32 +2,51 @@
   <div>
     <div :id="props.id"></div>
     {{ jsmeIsLoadedInternal ? "" : "JSME is loading, or JS is disabled" }}
-
-    <div>Smiles: {{ smilesString }}</div>
+    <div>
+      <div v-if="jsmeIsLoadedInternal" :style="{ width: props.width }">
+        <div
+          style="
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+          "
+        >
+          <span>Smiles:</span>
+          <div style="width: 100%">
+            <input
+              type="text"
+              placeholder="Enter Smiles"
+              style="width: 98%"
+              :value="props.modelValue"
+              v-on:input="(e) => updateValue(e)"
+              v-on:change="(e) => updateValue(e)"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onBeforeMount, onMounted, getCurrentInstance, ref } from "vue";
+import { onBeforeMount, onMounted, getCurrentInstance, ref, watch } from "vue";
 
 const props = defineProps({
   width: { type: String, default: "800px" },
   height: { type: String, default: "500px" },
-  id: { type: String, default: "JME" },
-  smiles: { type: String, default: "" },
+  id: { type: String, default: "JME" + Math.random() },
   options: { type: String, default: "" },
-  onChance: { type: Function, required: false },
+  onChange: { type: Function, required: false },
   src: { type: String, default: "" },
   border: { type: String, default: "5px solid black" },
 
   code: { type: String, default: "JME.class" },
-  name: { type: String, default: "JME1" },
+  name: { type: String, default: "JME" + Math.random() },
   archive: { type: String, default: "JME.jar" },
+  modelValue: { type: String, default: "" },
 });
-const emit = defineEmits(["change"]);
-
-const jmeRef = ref(null);
-const smilesString = ref(props.smiles);
+const emit = defineEmits(["change", "update:modelValue"]);
 
 const src = ref(props.src || "./node_modules/jsme-editor/jsme.nocache.js");
 console.log(src.value);
@@ -46,6 +65,20 @@ newScript.type = "text/javascript";
 newScript.src = src.value;
 document.head.appendChild(newScript);
 
+const updateValue = (inboundValue: Event) => {
+  console.log(`Inbound: ${inboundValue}`);
+  let value = "";
+  if (!!inboundValue && inboundValue instanceof Event) {
+    value = (inboundValue.target as HTMLInputElement).value;
+  } else {
+    value = inboundValue;
+  }
+  console.log(`Inbound->value: ${value}`);
+  console.log(`props.modelValue: ${props.modelValue}`);
+
+  emit("update:modelValue", value);
+};
+
 // Add jsmeOnLoad function. This is required for proper intialization of the applet
 window.jsmeOnLoad = () => {
   jsmeIsLoaded = true;
@@ -54,15 +87,29 @@ window.jsmeOnLoad = () => {
   let JSA = new (window.JSApplet.JSME as unknown as JSME)(
     props.id,
     props.width,
-    props.height
+    props.height,
+    props.options
   );
 
-  JSA.readGenericMolecularInput(smilesString.value);
+  JSA.readGenericMolecularInput(props.modelValue);
 
   JSA.setCallBack("AfterStructureModified", (e: JsmeEvent) => {
-    smilesString.value = e.src.smiles();
-    emit("change", e.src.smiles());
+    const newSmiles = e.src.smiles();
+    updateValue(newSmiles);
+    console.log(newSmiles);
+    console.log(props.modelValue);
+    if (props.onChange) {
+      props.onChange(newSmiles);
+    }
   });
+
+  watch(
+    () => props.modelValue,
+    (newVal) => {
+      console.log(`Watch props.modelValue: ${newVal}`);
+      JSA.readGenericMolecularInput(newVal);
+    }
+  );
   jsmeIsLoadedInternal.value = true;
 };
 </script>
