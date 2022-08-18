@@ -9,7 +9,6 @@
 
 <script setup lang="ts">
 import { onBeforeMount, onMounted, getCurrentInstance, ref } from "vue";
-import { useScriptTag } from "@vueuse/core";
 
 const props = defineProps({
   width: { type: String, default: "800px" },
@@ -39,13 +38,15 @@ type JsmeEvent = {
   src: any;
 };
 
-// Include JSME Script
+// Include JSME-Editor core scripts.
+// Beware, this script will add multiple scripts to the document.HEAD
+
 const newScript = document.createElement("script");
 newScript.type = "text/javascript";
 newScript.src = src.value;
-
 document.head.appendChild(newScript);
 
+// Add jsmeOnLoad function. This is required for proper intialization of the applet
 window.jsmeOnLoad = () => {
   jsmeIsLoaded = true;
 
@@ -64,5 +65,4 @@ window.jsmeOnLoad = () => {
   });
   jsmeIsLoadedInternal.value = true;
 };
-// });
 </script>

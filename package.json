@@ -13,7 +13,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@vueuse/core": "^9.1.0",
     "jsme-editor": "^2022.2.26",
     "vue": "^3.2.37"
   },
