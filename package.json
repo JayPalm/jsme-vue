@@ -7,10 +7,18 @@
   "private": false,
   "version": "0.0.3",
   "description": "Vue wrapper for JSME-Editor",
-  "keywords": ["chemistry", "molecule-structure","molecule","smiles"],
+  "keywords": [
+    "chemistry",
+    "molecule-structure",
+    "molecule",
+    "smiles"
+  ],
   "license": "3-clause BSD",
   "homepage": "https://github.com/JayPalm/jsme-vue",
-  "repository": {"type":"git","url":"https://github.com/JayPalm/jsme-vue"},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JayPalm/jsme-vue"
+  },
   "type": "module",
   "scripts": {
     "dev": "vite",
