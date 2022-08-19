@@ -1,11 +1,21 @@
 {
   "name": "jsme-vue",
+  "main": "./dist/jsme-vue.umd.js",
   "module": "/dist/jsme-vue.es.js",
-  "unpkg": "/dist/jsme-vue.min.js",
+  "exports": {
+    ".": {
+      "import":"./dist/jsme-vue.es.js",
+      "require":"./dist/jsme-vue.umd.js"
+    }
+  },
   "style": "/dist/jsme-vue.css",
-  "files": ["dist/*"],
+  "files": [
+    "dist/*",
+    "README.md",
+    "LICENSE"
+  ],
   "private": false,
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Vue wrapper for JSME-Editor",
   "keywords": [
     "chemistry",

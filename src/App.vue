@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import { JSME } from "./components/";
+import JSME from "./components/";
 
 const sampleSmiles = "CCCNCc1ccccc1";
 const smilesString = ref(sampleSmiles);
