@@ -1,11 +1,11 @@
 {
   "name": "jsme-vue",
-  "main": "/dist/jsme-vue.ssr.js",
   "module": "/dist/jsme-vue.esm.js",
   "unpkg": "/dist/jsme-vue.min.js",
   "style": "/dist/jsme-vue.css",
+  "files": ["dist/*"],
   "private": false,
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Vue wrapper for JSME-Editor",
   "keywords": [
     "chemistry",
