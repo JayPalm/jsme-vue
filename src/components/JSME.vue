@@ -1,9 +1,30 @@
 <template>
   <div>
-    <div :id="props.id"></div>
-    {{ jsmeIsLoadedInternal ? "" : "JSME is loading, or JS is disabled" }}
+    <div
+      :style="{
+        width: props.width,
+        height: props.height,
+        outline: jsmeIsLoadedInternal ? '' : '1px solid black',
+        outlineOffset: '-.5px',
+        textAlign: 'center',
+      }"
+    >
+      <div :id="props.id"></div>
+      <div
+        v-if="!jsmeIsLoadedInternal"
+        :style="{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          '-webkit-transform': 'translate(-50%, -50%)',
+        }"
+      >
+        JSME is loading, or JS is disabled
+      </div>
+    </div>
     <div>
-      <div v-if="jsmeIsLoadedInternal" :style="{ width: props.width }">
+      <div v-if="jsmeIsLoadedInternal">
         <div
           style="
             width: 100%;
